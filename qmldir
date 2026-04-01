@@ -1,0 +1,6 @@
+module NyxBar
+singleton MediaService ./services/MediaService.qml
+singleton Settings ./services/Settings.qml
+singleton CavaService ./services/CavaService.qml
+singleton AudioService ./services/AudioService.qml
+singleton UpdatesService ./services/UpdatesService.qml
