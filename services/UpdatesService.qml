@@ -47,6 +47,7 @@ Singleton {
         command: [
             "ghostty",
             "--class=float.term",
+            "--title=System Update",
             "-e",
             Paths.update_path,
             "--update-system",
