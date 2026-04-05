@@ -2,7 +2,6 @@ import Quickshell
 import QtQuick
 import QtQuick.Layouts
 import qs.common
-import qs.services
 
 ComponentWrapper {
     id: root

@@ -16,7 +16,7 @@ PopupWindow {
     color: "transparent"
     visible: playerVisible
     anchor.item: popupAnchor
-    anchor.edges: Edges.Bottom | Edges.Left
+    anchor.edges: Edges.Bottom | Edges.Left // qmllint disable missing-type
     anchor.margins.top: 50
     anchor.margins.left: 20
     implicitWidth: 400
@@ -64,13 +64,19 @@ PopupWindow {
             anchors.verticalCenter: root.verticalCenter
             anchors.left: root.left
             anchors.leftMargin: 10
+            color: Settings.background
 
             Image {
+                anchors.fill: parent
                 fillMode: Image.PreserveAspectCrop
                 source: MediaService.activePlayer.trackArtUrl
+                asynchronous: true
+                cache: true
+                smooth: true
 
                 Rectangle {
                     anchors.fill: parent
+                    color: "transparent"
 
                     gradient: LinearGradient {
                         x1: 0

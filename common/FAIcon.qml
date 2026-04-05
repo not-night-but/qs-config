@@ -5,7 +5,7 @@ StyledText {
     property int grade: -25
 
     font.family: "Font Awesome 6 Free Solid"
-    font.pointSize: Settings.fontSize
+    font.pixelSize: Settings.fontSize
     font.variableAxes: ({
         FILL: fill.toFixed(1),
         GRAD: grade,

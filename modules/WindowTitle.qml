@@ -25,7 +25,7 @@ ComponentWrapper {
 
     readonly property string windowTitle: {
         if (root.monitor.activeWorkspace?.toplevels.values.length <= 0) return ""
-        return currentTopLevel.title
+        return currentTopLevel?.title
     }
 
     function getAppIcon() {
@@ -46,7 +46,7 @@ ComponentWrapper {
         Loader {
             id: icon
             asynchronous: true
-            active: root.getAppIcon() !== ""
+            active: false && root.getAppIcon() !== ""
 
             sourceComponent: IconImage {
                 asynchronous: true

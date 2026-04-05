@@ -16,7 +16,7 @@ PopupWindow {
     property TrayMenu childMenu: null
 
     anchor.item: popupAnchor
-    anchor.edges: Edges.Bottom | Edges.Left
+    anchor.edges: Edges.Bottom | Edges.Left // qmllint disable missing-type
 
     implicitWidth: menuLayout.implicitWidth + 10
     implicitHeight: menuLayout.implicitHeight + 10
@@ -89,7 +89,7 @@ PopupWindow {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        active: !item.modelData.isSeparator
+                        active: item.modelData && !item.modelData.isSeparator
 
                         sourceComponent: Item {
                             id: source

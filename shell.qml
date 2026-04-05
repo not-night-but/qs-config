@@ -1,53 +1,53 @@
-//@ pragma UseQApplication
 import Quickshell
 import QtQuick
 import QtQuick.Layouts
 import "./modules"
+import qs.common
 
 ShellRoot {
     
     Variants {
         model: Quickshell.screens;
 
-        delegate: Component {
-            PanelWindow {
+        Scope {
+            id: scope
+            required property var modelData
+
+            StyledWindow {
                 id: panel
-                required property var modelData
-                color: "transparent"
                 exclusionMode: ExclusionMode.Auto
 
-                screen: modelData
+                screen: scope.modelData
                 anchors {
                     top: true
                     left: true
                     right: true
                 }
-
-                margins {
+                // qmllint disable unresolved-type unqualified missing-property
+                margins { 
                     top: 10
                     left: 5
                     right: 5
                     bottom: 0
                 }
+                // qmllint enable unresolved-type unqualified missing-property
 
                 implicitHeight: 35
 
                 // Main bar
-                RowLayout {
+                Item {
                     id: bar
                     anchors.fill: parent
-                    spacing: 0
-                    // anchors.topMargin: 10
                     anchors.bottomMargin: 5
                 
                     // Left section
                     RowLayout {
-                        Layout.alignment: Qt.AlignLeft
+                        anchors.left: parent.left
 
                         Media { }
                         Cava { }
-                        Workspaces{
-                            qsScreen: panel.modelData
+                        Workspaces {
+                            qsScreen: scope.modelData
                         }
                     }
 
@@ -55,12 +55,12 @@ ShellRoot {
                         anchors.centerIn: parent
 
                         WindowTitle {
-                            qsScreen: panel.modelData
+                            qsScreen: scope.modelData
                         }
                     }
 
                     RowLayout {
-                        Layout.alignment: Qt.AlignRight
+                        anchors.right: parent.right
 
                         Tray {}
 
@@ -70,17 +70,33 @@ ShellRoot {
                     }
 
                 }
-                // This requires the panel top margin to be gone
-                // MouseArea {
-                //     width: 100
-                //     height: 10
-                //     cursorShape: Qt.PointingHandCursor
-                //     anchors.bottom: bar.top
-                //     anchors.horizontalCenter: bar.horizontalCenter
-                // }
-
             }
         }
+    }
+    Variants {
+        model: Quickshell.screens;
 
+        delegate: Component {
+            StyledWindow {
+                required property var modelData
+                screen: modelData
+                exclusionMode: ExclusionMode.Ignore
+                width: mouse.width
+
+                anchors {
+                    top: true
+                }
+
+                MouseArea {
+                    id: mouse
+
+                    width: 300
+                    height: 10
+                    cursorShape: Qt.PointingHandCursor
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.top
+                }
+            }
+        }
     }
 }
