@@ -1,11 +1,11 @@
 import Quickshell
+import Quickshell.Wayland
 import QtQuick
 import QtQuick.Layouts
 import "./modules"
 import qs.common
 
 ShellRoot {
-    
     Variants {
         model: Quickshell.screens;
 
@@ -16,6 +16,7 @@ ShellRoot {
             StyledWindow {
                 id: panel
                 exclusionMode: ExclusionMode.Auto
+                WlrLayershell.layer: WlrLayer.Bottom
 
                 screen: scope.modelData
                 anchors {
@@ -44,7 +45,9 @@ ShellRoot {
                     RowLayout {
                         anchors.left: parent.left
 
-                        Media { }
+                        Media {
+                            onOpenMediaPopout: rootWindow.showMedia = true
+                        }
                         Cava { }
                         Workspaces {
                             qsScreen: scope.modelData
@@ -71,20 +74,21 @@ ShellRoot {
 
                 }
             }
-        }
-    }
-    Variants {
-        model: Quickshell.screens;
 
-        delegate: Component {
             StyledWindow {
-                required property var modelData
-                screen: modelData
+                id: rootWindow
+                // visible: false
+                screen: scope.modelData
                 exclusionMode: ExclusionMode.Ignore
-                width: mouse.width
+                focusable: true
+                property bool showMedia: false
+                // width: mouse.width
 
                 anchors {
                     top: true
+                    left: true
+                    right: true
+                    bottom: true
                 }
 
                 MouseArea {
@@ -95,6 +99,91 @@ ShellRoot {
                     cursorShape: Qt.PointingHandCursor
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.top
+
+                    onClicked: rootWindow.showMedia = !rootWindow.showMedia
+                }
+
+                FocusScope {
+                    id: mediaPopout
+                    focus: rootWindow.showMedia
+
+                    Keys.onEscapePressed: {
+                        rootWindow.showMedia = false
+                    }
+
+                    Popout {
+                        anchors.fill: parent
+                        location: Popout.Location.TopLeft
+
+                        MediaWidget {
+                            id: popoutContent
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                        }
+                    }
+
+                    states: [
+                        State {
+                            name: "hidden"
+                            when: !rootWindow.showMedia
+
+                            PropertyChanges {
+                                mediaPopout.implicitHeight: 0
+                                mediaPopout.implicitWidth: 0
+                                popoutContent.width: 0
+                                popoutContent.height: 0
+                                popoutContent.opacity: 0
+                            }
+                        },
+                        State {
+                            name: "visible"
+                            when: rootWindow.showMedia
+
+                            PropertyChanges {
+                                mediaPopout.implicitHeight: 300
+                                mediaPopout.implicitWidth: 450
+                                popoutContent.width: 415
+                                popoutContent.height: 220
+                                popoutContent.opacity: 1
+                            }
+                        },
+                    ]
+
+                    transitions: [
+                        Transition {
+                            from: "hidden"
+                            to: "visible"
+
+                            Anim {
+                                targets: [mediaPopout, popoutContent]
+                                properties: "implicitHeight,implicitWidth,opacity"
+                            }
+                        },
+                        Transition {
+                            from: "visible"
+                            to: "hidden"
+
+                            Anim {
+                                targets: [mediaPopout, popoutContent]
+                                properties: "implicitHeight,implicitWidth,opacity"
+                            }
+
+                            Anim {
+                                target: popoutContent
+                                properties: "width,height"
+                            }
+                        }
+                    ]
+                }
+
+                mask: Region {
+                    Region {
+                        item: mediaPopout
+                    }
+
+                    Region {
+                        item: mouse
+                    }
                 }
             }
         }

@@ -9,6 +9,8 @@ ComponentWrapper {
 
     property bool playerVisible: false
 
+    signal openMediaPopout()
+
     RowLayout {
         FAIcon {
             text: "music"
@@ -22,7 +24,8 @@ ComponentWrapper {
         MouseArea {
             anchors.fill: parent
             onClicked: () => {
-                root.playerVisible = !root.playerVisible
+                root.openMediaPopout();
+                // root.playerVisible = !root.playerVisible
             }
             cursorShape: Qt.PointingHandCursor
         }

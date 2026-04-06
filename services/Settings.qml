@@ -24,7 +24,7 @@ Singleton {
     property int workspaceSpacing: 8
     property real volumeStep: 5.0
 
-    property var defaultCurve: [0.38, 1.21, 0.22, 1, 1, 1]
+    property var defaultCurve: [0.2, 0, 0, 1, 1, 1]
     property var defaultDuration: 500
 
     property int spacing: 10 
