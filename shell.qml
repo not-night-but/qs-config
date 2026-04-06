@@ -111,6 +111,13 @@ ShellRoot {
                         rootWindow.showMedia = false
                     }
 
+                    MouseArea {
+                        anchors.fill: parent
+                        acceptedButtons: Qt.RightButton
+
+                        onClicked: rootWindow.showMedia = false
+                    }
+
                     Popout {
                         anchors.fill: parent
                         location: Popout.Location.TopLeft
@@ -120,6 +127,7 @@ ShellRoot {
                             anchors.top: parent.top
                             anchors.left: parent.left
                         }
+
                     }
 
                     states: [
