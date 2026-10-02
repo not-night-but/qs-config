@@ -78,9 +78,9 @@ PopupWindow {
 
                     Layout.fillWidth: true
 
-                    implicitHeight: modelData.isSeparator ? 1 : children.implicitHeight
+                    implicitHeight: modelData?.isSeparator ? 1 : children.implicitHeight
                     implicitWidth: Settings.trayMenuWidth
-                    color: modelData.isSeparator ? Settings.accent : "transparent"
+                    color: modelData?.isSeparator ? Settings.accent : "transparent"
 
                     Loader {
                         id: children
@@ -96,7 +96,7 @@ PopupWindow {
                             implicitHeight: label.implicitHeight
 
                             property color textColour: {
-                                if (!item.modelData.enabled) {
+                                if (item.modelData && !item.modelData.enabled) {
                                     return Settings.disabled;
                                 } else if (entryMouseArea.containsMouse) {
                                     return Settings.accent;
@@ -111,11 +111,11 @@ PopupWindow {
                                 asynchronous: true
                                 anchors.left: parent.left
 
-                                active: item.modelData.icon !== ""
+                                active: item.modelData && item.modelData.icon !== ""
 
                                 sourceComponent: IconImage {
                                     asynchronous: true
-                                    implicitSize: label.implicitHeight
+                                    implicitSize: label.implicitHeight - 4
                                     source: item.modelData.icon
                                 }
                             }
@@ -126,7 +126,7 @@ PopupWindow {
                                 anchors.left: icon.right
                                 anchors.leftMargin: icon.active ? 10 : 0
 
-                                text: item.modelData.text
+                                text: item.modelData?.text ?? ""
                                 color: source.textColour
                                 maxWidth: Settings.trayMenuWidth - (icon.active ? icon.implicitWidth + label.anchors.leftMargin : 0) - (expand.active ? expand.implicitWidth + 10 : 0)
                             }
@@ -138,16 +138,16 @@ PopupWindow {
                                 anchors.verticalCenter: parent.verticalCenter
                                 anchors.right: parent.right
 
-                                active: item.modelData.hasChildren || item.modelData.buttonType != QsMenuButtonType.None
+                                active: item.modelData && (item.modelData.hasChildren || item.modelData.buttonType != QsMenuButtonType.None)
 
-                                sourceComponent: FAIcon {
+                                sourceComponent: MaterialIcon {
                                     text: {
                                         if (item.modelData.hasChildren) {
-                                            return "chevron-right"
+                                            return "chevron_right"
                                         } else if (item.modelData.buttonType === QsMenuButtonType.CheckBox) {
-                                            return item.modelData.checkState === Qt.Checked ? "square-check" : "square"
+                                            return item.modelData.checkState === Qt.Checked ? "check_box" : "check_box_outline_blank"
                                         } else if (item.modelData.buttonType === QsMenuButtonType.RadioButton) {
-                                            return item.modelData.checkState === Qt.Checked ? "circle-dot" : "circle"
+                                            return item.modelData.checkState === Qt.Checked ? "radio_button_checked" : "radio_button_unchecked"
                                         }
                                     }
                                     color: source.textColour
@@ -158,11 +158,6 @@ PopupWindow {
                                 id: entryMouseArea
                                 anchors.fill: parent
                                 hoverEnabled: true
-
-                                onEntered: {
-                                    if (item.modelData && item.modelData.hasChildren) {
-                                    }
-                                }
 
                                 onExited: {
                                     if (root.childMenu) {
@@ -244,7 +239,6 @@ PopupWindow {
     }
 
     function toggleVisibility() {
-        console.log("CHILDREN: ", menuOpener.children)
         if (visible) {
             root.closeSelf();
         } else {

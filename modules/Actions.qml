@@ -9,7 +9,7 @@ ComponentWrapper {
         Layout.fillHeight: true
         Layout.fillWidth: true
         Layout.alignment: Qt.AlignCenter
-        spacing: 15
+        spacing: 5
 
         Updates { }
         Volume { }

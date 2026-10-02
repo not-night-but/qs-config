@@ -29,11 +29,11 @@ Singleton {
 
     function getLoopIcon(): string {
         if (activePlayer.loopState === MprisLoopState.Track) {
-            return "󰑘"
+            return "repeat_one_on"
         } else if (activePlayer.loopState === MprisLoopState.Playlist) {
-            return "󰑖"
+            return "repeat_on"
         } else {
-            return "󰑗"
+            return "repeat"
         }
     }
 

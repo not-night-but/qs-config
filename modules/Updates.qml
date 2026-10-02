@@ -6,8 +6,9 @@ import qs.common
 RowLayout {
     id: root
 
-    FAIcon {
+    MaterialIcon {
         text: "download"
+        size: Settings.iconMedium
     }
 
     StyledText {
@@ -16,12 +17,12 @@ RowLayout {
 
     MouseArea {
         anchors.fill: parent
+        cursorShape: Qt.PointingHandCursor
 
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: (mouse) => {
             root.mouseClicked(mouse)
         }
-        cursorShape: Qt.PointingHandCursor
     }
 
     function mouseClicked(mouse: MouseEvent) {

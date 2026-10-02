@@ -12,8 +12,9 @@ ComponentWrapper {
     signal openMediaPopout()
 
     RowLayout {
-        FAIcon {
-            text: "music"
+        MaterialIcon {
+            text: "artist"
+            size: Settings.iconMedium
         }
 
         TruncatedText {
@@ -28,11 +29,6 @@ ComponentWrapper {
                 // root.playerVisible = !root.playerVisible
             }
             cursorShape: Qt.PointingHandCursor
-        }
-
-        MediaPopup {
-            popupAnchor: root
-            playerVisible: root.playerVisible
         }
     }
 

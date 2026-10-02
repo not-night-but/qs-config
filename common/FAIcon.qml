@@ -4,7 +4,7 @@ StyledText {
     property real fill
     property int grade: -25
 
-    font.family: "Font Awesome 6 Free Solid"
+    font.family: "Font Awesome 6 Free"
     font.pixelSize: Settings.fontSize
     font.variableAxes: ({
         FILL: fill.toFixed(1),

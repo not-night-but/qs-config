@@ -8,8 +8,13 @@ RowLayout {
 
     property int wheelAcc: 0
 
+    MaterialIcon {
+        text: AudioService.getOutputIcon()
+        size: Settings.iconMedium
+    }
+
     StyledText {
-        text: `${AudioService.getOutputIcon()} ${root.getVolumeString()}`
+        text: `${root.getVolumeString()}`
     }
 
     MouseArea {

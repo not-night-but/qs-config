@@ -43,17 +43,17 @@ ComponentWrapper {
     }
 
     RowLayout {
-        Loader {
-            id: icon
-            asynchronous: true
-            active: false && root.getAppIcon() !== ""
+        // Loader {
+        //     id: icon
+        //     asynchronous: true
+        //     active: false && root.getAppIcon() !== ""
 
-            sourceComponent: IconImage {
-                asynchronous: true
-                implicitSize: Settings.iconSize
-                source: root.getAppIcon()
-            }
-        }
+        //     sourceComponent: IconImage {
+        //         asynchronous: true
+        //         implicitSize: 24
+        //         source: root.getAppIcon()
+        //     }
+        // }
 
         TruncatedText {
             text: root.windowTitle

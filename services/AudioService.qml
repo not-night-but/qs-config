@@ -237,9 +237,9 @@ Singleton {
 
     function getOutputIcon() {
         if (muted) {
-            return "";
+            return "volume_off";
         } else {
-            return ""
+            return "headphones"
         }
     }
 

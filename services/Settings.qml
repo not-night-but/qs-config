@@ -28,8 +28,15 @@ Singleton {
     property var defaultDuration: 500
 
     property int spacing: 10 
-    property int iconSize: 24
+    property int iconSmall: 18
+    property int iconMedium: 22
+    property int iconLarge: 30
 
     property int playerStatusWidth: 350
     property int windowTitleWidth: 500
+    property int mediaWidgetWidth: 415
+    property int mediaWidgetHeight: 220
+
+    property int calendarLabelPadding: 2
+    property int calendarItemPadding: 5
 }

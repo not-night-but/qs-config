@@ -57,32 +57,35 @@ Item {
             anchors.fill: parent
             spacing: 0
             RowLayout {
-                spacing: 10
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.leftMargin: 10
                 Layout.topMargin: 10
                 Layout.bottomMargin: 0
-                StyledText {
+                MaterialIcon {
                     id: shuffleControl
-                    text: "󰒟"
-                    color: MediaService.isShuffled ? Settings.accent : Settings.text
+                    text: "shuffle"
+                    color: MediaService.isShuffled || shuffleMouse.containsMouse ? Settings.accent : Settings.text
 
                     MouseArea {
+                        id: shuffleMouse
                         anchors.fill: shuffleControl
                         onClicked: MediaService.toggleShuffle()
                         cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
                     }
                 }
 
-                StyledText {
+                MaterialIcon {
                     id: loopControl
                     text: MediaService.getLoopIcon()
-                    color: MediaService.isLooping ? Settings.accent : Settings.text
+                    color: MediaService.isLooping || loopMouse.containsMouse ? Settings.accent : Settings.text
 
                     MouseArea {
+                        id: loopMouse
                         anchors.fill: loopControl
                         onClicked: MediaService.cycleLoopState()
                         cursorShape: Qt.PointingHandCursor
+                        hoverEnabled: true
                     }
                 }
 
@@ -179,53 +182,51 @@ Item {
     }
 
     ColumnLayout {
+        anchors.verticalCenter: parent.verticalCenter
         anchors.left: trackArt.right
-        anchors.leftMargin: 20
+        anchors.leftMargin: 10
 
-        Text {
+        MaterialIcon {
             id: backButton
-            Layout.topMargin: 30
-            text: "󰒮"
-            font.pixelSize: 30
-            color: Settings.text
-            font.family: "Cartograph CF"
-            font.italic: true
-            font.weight: Font.Bold
+            text: "skip_previous"
+            size: Settings.iconLarge
+            color: backMouse.containsMouse ? Settings.accent : Settings.text
 
             MouseArea {
+                id: backMouse
                 anchors.fill: backButton
                 onClicked: MediaService.activePlayer.previous()
                 cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
             }
         }
-        Text {
+        MaterialIcon {
             id: playButton
-            text: MediaService.activePlayer.isPlaying ? "󰏤" : "󰐊"
-            font.pixelSize: 30
-            color: Settings.text
-            font.family: "Cartograph CF"
-            font.italic: true
-            font.weight: Font.Bold
+            text: MediaService.activePlayer.isPlaying ? "pause" : "play_arrow"
+            size: Settings.iconLarge
+            color: playMouse.containsMouse ? Settings.accent : Settings.text
 
             MouseArea {
+                id: playMouse
                 anchors.fill: playButton
                 onClicked: MediaService.activePlayer.togglePlaying()
                 cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
             }
         }
-        Text {
+
+        MaterialIcon {
             id: nextButton
-            text: "󰒭"
-            font.pixelSize: 30
-            color: Settings.text
-            font.family: "Cartograph CF"
-            font.italic: true
-            font.weight: Font.Bold
+            text: "skip_next"
+            size: Settings.iconLarge
+            color: nextMouse.containsMouse ? Settings.accent : Settings.text
 
             MouseArea {
+                id: nextMouse
                 anchors.fill: nextButton
                 onClicked: MediaService.activePlayer.next()
                 cursorShape: Qt.PointingHandCursor
+                hoverEnabled: true
             }
         }
     }
